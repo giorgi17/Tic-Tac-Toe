@@ -106,9 +106,6 @@ const Game = () => {
 
   return (
     <div className="container">
-      <div className="rt">
-        <div className="rw"></div>
-      </div>
       <div className="game">
 
         <div className="game-board" ref={gameBoardRef}>
