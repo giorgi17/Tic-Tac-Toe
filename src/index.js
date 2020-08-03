@@ -14,14 +14,20 @@ const Game = () => {
   const [ numToWin, setNumToWin ] = useState(3);
   const [ winPossibilities, setWinPossibilities ] = useState([]);
   const gameBoardRef = useRef(null);
-  
-  useEffect(() => {
-    setWinPossibilities(calculatePossibilities(rows, columns));
-    setSquares(Array(columns*rows).fill(null));
-  }, [rows, columns]);
 
   const nextSymbol = isXNext ? "X" : "O";
   const winner = calculateWinner(squares, winPossibilities, numToWin, columns, gameBoardRef);
+
+  useEffect(() => {
+    setWinPossibilities(calculatePossibilities(rows, columns));
+    setSquares(Array(columns*rows).fill(null));      
+  }, [rows, columns]);
+
+  useEffect(() => {
+    if (winner) {
+      paintWonLines(winner.numbers, columns, gameBoardRef);
+    }
+  });
 
   const renderSquare = (i) => {
     var d = new Date();
@@ -100,6 +106,9 @@ const Game = () => {
 
   return (
     <div className="container">
+      <div className="rt">
+        <div className="rw"></div>
+      </div>
       <div className="game">
 
         <div className="game-board" ref={gameBoardRef}>
@@ -154,8 +163,6 @@ const paintWonLines = (winningLines, columns, gameBoardRef) => {
     if (gameBoardRef.current) {
       const remainder = winningLines[i] % columns;
       const numberOfRow = (winningLines[i] - remainder) / columns;
-      // console.log(remainder);
-      // console.log(numberOfRow);
 
       try {
         gameBoardRef.current.children[numberOfRow].children[remainder].style.backgroundColor = "red";
