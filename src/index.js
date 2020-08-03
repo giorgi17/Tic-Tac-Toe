@@ -314,10 +314,6 @@ const calculateWinner = (squares, possibleLines, numToWin, columns, gameBoardRef
     }
   }
 
-  if (result) {
-    paintWonLines(result.numbers, columns, gameBoardRef);
-  }
-
   return result;
 }
 
